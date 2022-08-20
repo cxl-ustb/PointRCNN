@@ -1,0 +1,8 @@
+setup.py
+./src/iou3d.cpp
+./src/iou3d_kernel.cu
+roipool3d.egg-info/PKG-INFO
+roipool3d.egg-info/SOURCES.txt
+roipool3d.egg-info/dependency_links.txt
+roipool3d.egg-info/not-zip-safe
+roipool3d.egg-info/top_level.txt
