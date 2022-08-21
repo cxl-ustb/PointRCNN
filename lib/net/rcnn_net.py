@@ -114,11 +114,12 @@ class RCNNNet(nn.Layer):
                     pts_extra_input_list = [paddle.unsqueeze(input_data['rpn_intensity'],2),
                                             paddle.unsqueeze(input_data['seg_mask'],2)]
                 else:
-                    pts_extra_input_list = paddle.unsqueeze(input_data['seg_mask'],2)
+                    pts_extra_input_list = [paddle.unsqueeze(input_data['seg_mask'],2)]
 
                 if cfg.RCNN.USE_DEPTH:
                     pts_depth = input_data['pts_depth'] / 70.0 - 0.5
                     pts_extra_input_list.append(paddle.unsqueeze(pts_depth,2))
+
                 pts_extra_input=paddle.concat(pts_extra_input_list,2)
 
                 pts_feature=paddle.concat((pts_extra_input, rpn_features),2)

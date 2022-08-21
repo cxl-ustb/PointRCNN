@@ -1,0 +1,39 @@
+{
+    "define_macros": [],
+    "extra_compile_args": [
+        "-w",
+        "-DPADDLE_WITH_CUSTOM_KERNEL"
+    ],
+    "extra_link_args": [
+        "-l:core_avx.so",
+        "-lcudart"
+    ],
+    "include_dirs": [
+        "/home/cxl/anaconda3/envs/paddle/lib/python3.8/site-packages/paddle/include",
+        "/home/cxl/anaconda3/envs/paddle/lib/python3.8/site-packages/paddle/include/third_party",
+        "/usr/local/cuda/include"
+    ],
+    "library_dirs": [
+        "/home/cxl/anaconda3/envs/paddle/lib/python3.8/site-packages/paddle/libs",
+        "/usr/local/cuda/lib64",
+        "/home/cxl/anaconda3/envs/paddle/lib/python3.8/site-packages/paddle/fluid"
+    ],
+    "pointnet2.so": "028ba43c5cc074d617f65324475de693",
+    "runtime_library_dirs": [
+        "/home/cxl/anaconda3/envs/paddle/lib/python3.8/site-packages/paddle/libs",
+        "/usr/local/cuda/lib64",
+        "/home/cxl/anaconda3/envs/paddle/lib/python3.8/site-packages/paddle/fluid"
+    ],
+    "sources": [
+        "./src/sampling_gpu.cu",
+        "./src/sampling.cpp",
+        "./src/pointnet2_api.cpp",
+        "./src/ball_query_gpu.cu",
+        "./src/ball_query.cpp",
+        "./src/group_points_gpu.cu",
+        "./src/group_points.cpp",
+        "./src/interpolate_gpu.cu",
+        "./src/interpolate.cpp"
+    ],
+    "undef_macros": []
+}

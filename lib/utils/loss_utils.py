@@ -206,7 +206,8 @@ def get_reg_loss(pred_reg, reg_label, loc_scope, loc_bin_size, num_head_bin, anc
 
         ry_label = ry_label % (2 * np.pi)  # 0 ~ 2pi
         opposite_flag = (ry_label > np.pi * 0.5) & (ry_label < np.pi * 1.5)
-        ry_label[opposite_flag] = (ry_label[opposite_flag] + np.pi) % (2 * np.pi)  # (0 ~ pi/2, 3pi/2 ~ 2pi)
+        if ry_label[opposite_flag] is not None and ry_label[opposite_flag].size>0:
+            ry_label[opposite_flag] = (ry_label[opposite_flag] + np.pi) % (2 * np.pi)  # (0 ~ pi/2, 3pi/2 ~ 2pi)
         shift_angle = (ry_label + np.pi * 0.5) % (2 * np.pi)  # (0 ~ pi)
 
         shift_angle = paddle.clip(shift_angle - np.pi * 0.25, min=1e-3, max=np.pi * 0.5 - 1e-3)  # (0, pi/2)

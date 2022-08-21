@@ -147,8 +147,8 @@ class ProposalTargetLayer(nn.Layer):
                 # sampling fg
                 fg_rois_per_this_image = min(fg_rois_per_image, fg_num_rois)
 
-                rand_num = paddle.to_tensor(np.random.permutation(fg_num_rois)).astype(gt_boxes3d)
-                fg_inds = fg_inds[rand_num[:fg_rois_per_this_image]]
+                rand_num = paddle.to_tensor(np.random.permutation(fg_num_rois)).astype(gt_boxes3d.dtype)
+                fg_inds = fg_inds[:int((rand_num[:fg_rois_per_this_image.numpy()[0]]).numpy()[0])]
 
                 # sampling bg
                 bg_rois_per_this_image = cfg.RCNN.ROI_PER_IMAGE - fg_rois_per_this_image
@@ -156,8 +156,8 @@ class ProposalTargetLayer(nn.Layer):
 
             elif fg_num_rois > 0 and bg_num_rois == 0:
                 # sampling fg
-                rand_num = np.floor(np.random.rand(cfg.RCNN.ROI_PER_IMAGE) * fg_num_rois)
-                rand_num = paddle.to_tensor(rand_num).astype(gt_boxes3d)
+                rand_num = np.floor(np.random.rand(cfg.RCNN.ROI_PER_IMAGE) * fg_num_rois.numpy[0])
+                rand_num = paddle.to_tensor(rand_num).astype(gt_boxes3d.dtype)
                 fg_inds = fg_inds[rand_num]
                 fg_rois_per_this_image = cfg.RCNN.ROI_PER_IMAGE
                 bg_rois_per_this_image = 0
@@ -241,8 +241,10 @@ class ProposalTargetLayer(nn.Layer):
         for k in range(roi_boxes3d.shape[0]):
             temp_iou = cnt = 0
             roi_box3d = roi_boxes3d[k]
-
-            gt_box3d = paddle.reshape(gt_boxes3d[k],[1,7])
+            try:
+                gt_box3d = paddle.reshape(gt_boxes3d[k],[1,7])
+            except:
+                print(gt_boxes3d[k].shape)
             aug_box3d = roi_box3d
             keep = True
             while temp_iou < pos_thresh and cnt < aug_times:

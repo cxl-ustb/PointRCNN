@@ -117,7 +117,7 @@ class ProposalLayer(nn.Layer):
             keep_idx = keep_idx[:post_top_n_list[i]]
 
             scores_single_list.append(cur_scores[keep_idx])
-            proposals_single_list.append(cur_proposals[keep_idx])
+            proposals_single_list.append(cur_proposals[keep_idx] if cur_proposals[keep_idx].size>7 else cur_proposals[keep_idx].unsqueeze(0))
 
         scores_single = paddle.concat(scores_single_list, 0)
         proposals_single = paddle.concat(proposals_single_list, 0)

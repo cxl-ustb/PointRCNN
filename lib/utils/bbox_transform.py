@@ -18,8 +18,13 @@ def rotate_pc_along_paddle(pc,rot_angle):
     raw_2=paddle.concat([sina,cosa],axis=1)
     R=paddle.concat((paddle.unsqueeze(raw_1,axis=1),paddle.unsqueeze(raw_2,axis=1)),axis=1)
 
-    pc_temp=paddle.unsqueeze(pc[:,[0,2]],axis=1)
-    pc[:,0:2]=paddle.squeeze(paddle.matmul(pc_temp,paddle.transpose(R,[0,2,1])),axis=1)
+    # pc_temp=paddle.unsqueeze(pc[:,[0,2]],axis=1)
+    pc_temp_numpy=np.concatenate([pc[:,0].numpy()[:,np.newaxis],pc[:,2].numpy()[:,np.newaxis]],axis=-1)[:,np.newaxis,:]
+    pc_temp=paddle.to_tensor(pc_temp_numpy)
+    pc_temp=paddle.squeeze(paddle.matmul(pc_temp,paddle.transpose(R,[0,2,1])),axis=1)
+    pc[:,0]=pc_temp[:,0]
+    pc[:,2]=pc_temp[:,1]
+    # pc[:,0:2]=paddle.squeeze(paddle.matmul(pc_temp,paddle.transpose(R,[0,2,1])),axis=1)
     return pc
 
 def decode_bbox_target(roi_box3d, pred_reg, loc_scope,

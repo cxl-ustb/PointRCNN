@@ -179,7 +179,7 @@ __C.TEST.RPN_POST_NMS_TOP_N = 300
 __C.TEST.RPN_NMS_THRESH = 0.7
 __C.TEST.RPN_DISTANCE_BASED_PROPOSE = True
 
-
+# 有用
 def cfg_from_file(filename):
     """Load a config file and merge it into the default options."""
     import yaml
@@ -189,6 +189,7 @@ def cfg_from_file(filename):
     _merge_a_into_b(yaml_cfg, __C)
 
 
+# 有用
 def _merge_a_into_b(a, b):
     """Merge config dictionary a into config dictionary b, clobbering the
     options in b whenever they are also specified in a.
